@@ -1,0 +1,9 @@
+[submodule "backup"]
+	path = backup
+	url = /home/taku/projects/ops-backup
+[submodule "adsb"]
+	path = adsb
+	url = /home/taku/projects/ops-adsb
+[submodule "audio"]
+	path = audio
+	url = /home/taku/projects/ops-audio

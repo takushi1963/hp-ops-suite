@@ -1,0 +1,11 @@
+[Unit]
+Description=Scheduled Full Disk Backup (dd)
+
+[Timer]
+# 毎週 日曜 03:00
+OnCalendar=Sun *-*-* 02:00
+Persistent=true
+AccuracySec=5min
+
+[Install]
+WantedBy=timers.target

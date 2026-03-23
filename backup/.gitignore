@@ -1,0 +1,13 @@
+# backup artifacts
+*.img
+*.img.gz
+*.gz
+*.tar
+*.tar.gz
+
+# logs
+*.log
+
+# runtime / mounts
+/run/
+/mnt/backup/

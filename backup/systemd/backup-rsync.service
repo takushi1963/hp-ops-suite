@@ -1,0 +1,26 @@
+[Unit]
+Description=Incremental Backup (rsync)
+Documentation=/usr/local/share/backup/README.md
+Wants=network-online.target
+After=network-online.target mnt-backup.mount
+ConditionPathIsMountPoint=/mnt/backup
+
+[Service]
+Type=oneshot
+User=root
+Group=root
+
+# 同時実行防止
+ExecStartPre=/usr/bin/flock -n /run/backup-rsync.lock -c true
+
+ExecStart=/usr/local/bin/backup-rsync.sh
+
+TimeoutStartSec=0
+StandardOutput=journal
+StandardError=journal
+
+Nice=10
+IOSchedulingClass=idle
+
+[Install]
+WantedBy=multi-user.target

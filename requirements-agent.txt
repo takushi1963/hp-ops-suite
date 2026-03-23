@@ -1,0 +1,7 @@
+# minimal dependencies for super-ops-agent.py (Orchestrator Type)
+# Most functionality relies on existing shell scripts
+
+# Optional: for enhanced system monitoring (fallback to shell if missing)
+# psutil>=5.8.0
+
+# That's it! Python 3.8+ with subprocess module is sufficient.

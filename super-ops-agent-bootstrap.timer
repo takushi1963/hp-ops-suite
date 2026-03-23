@@ -1,0 +1,13 @@
+[Unit]
+Description=HP-ADS-B Super OPS Bootstrap Timer
+Documentation=https://github.com/hp-adsb/ops
+Requires=super-ops-agent-bootstrap.service
+
+[Timer]
+# Hourly at :00
+OnCalendar=hourly
+OnBootSec=5min
+Persistent=yes
+
+[Install]
+WantedBy=timers.target

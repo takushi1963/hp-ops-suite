@@ -1,0 +1,33 @@
+[Unit]
+Description=HP-ADS-B Super OPS Agent (Orchestrator Type)
+Documentation=https://github.com/hp-adsb/ops
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+WorkingDirectory=/home/taku/projects/ops
+
+# Python スクリプト実行
+ExecStart=/usr/bin/python3 /home/taku/projects/ops/super-ops-agent.py monitor
+
+# 自動再起動
+Restart=always
+RestartSec=10
+
+# ログ出力
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=super-ops-agent
+
+# リソース制限
+MemoryLimit=512M
+CPUQuota=50%
+
+# タイムアウト
+TimeoutStopSec=30
+
+[Install]
+WantedBy=multi-user.target

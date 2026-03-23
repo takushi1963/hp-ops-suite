@@ -1,0 +1,22 @@
+[Unit]
+Description=HP-ADS-B Super OPS Bootstrap (Orchestrator)
+Documentation=https://github.com/hp-adsb/ops
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=root
+Group=root
+WorkingDirectory=/home/taku/projects/ops
+
+# Bootstrap 実行
+ExecStart=/usr/bin/python3 /home/taku/projects/ops/super-ops-agent.py bootstrap
+
+# ログ出力
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=super-ops-bootstrap
+
+# タイムアウト
+TimeoutStartSec=600

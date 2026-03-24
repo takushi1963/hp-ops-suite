@@ -2,8 +2,8 @@
 Description=Scheduled Incremental Backup (rsync)
 
 [Timer]
-# 毎日 02:30
-OnCalendar=*-*-* 02:30
+# 毎日 03:00
+OnCalendar=*-*-* 03:00
 Persistent=true
 AccuracySec=5min
 

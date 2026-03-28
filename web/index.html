@@ -1,0 +1,502 @@
+<!--
+ ============================================================
+ File    : index.html
+ Version : 5.6.0-A+++
+ Updated : 2026-03-07
+
+ Purpose :
+   OPS Unified Summary - FULL MONITOR
+   - 縦並び統合監視
+   - 壊れないJS（text取得）
+   - 10秒自動更新
+   - 色分岐（OK/NG/WARN）
+   - FEED表形式化（timestamp列追加）
+   - OPS HEALTH 色付き要約 + 詳細表示
+   - READ-ONLY
+
+ ChangeLog :
+   5.6.0 - OPS HEALTH を色付き要約 + ファイル名短縮表示に改善
+   5.5.0 - OPS HEALTH セクション追加（ops_health.json）
+   5.4.2 - FEEDセクションを表形式へ刷新（既存構造完全保持）
+ ============================================================
+-->
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>OPS Unified Summary v5.6</title>
+<style>
+body{font-family:monospace;background:#111;color:#eee;padding:20px}
+h1{color:#9cf}
+h2{color:#9cf}
+.section{margin-bottom:40px}
+pre{background:#1b1b1b;padding:10px;border:1px solid #333;white-space:pre-wrap}
+.ok{color:#7f7}
+.ng{color:#f77}
+.warn{color:#ffb}
+table{border-collapse:collapse;width:100%}
+th,td{border:1px solid #333;padding:6px}
+th{background:#222}
+.small{opacity:.7;font-size:90%}
+a{color:#8fd;text-decoration:none}
+a:hover{text-decoration:underline}
+.card{background:#181818;border:1px solid #333;padding:10px}
+.health-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:10px;
+  margin-bottom:12px;
+}
+.health-box{
+  background:#181818;
+  border:1px solid #333;
+  border-radius:8px;
+  padding:10px;
+}
+.health-title{
+  font-size:90%;
+  opacity:.8;
+  margin-bottom:6px;
+}
+.health-value{
+  font-size:120%;
+  font-weight:bold;
+}
+.health-ok{color:#7f7}
+.health-ng{color:#f77}
+.health-warn{color:#ffb}
+</style>
+</head>
+<body>
+
+<!-- ================= GLOBAL NAV ================= -->
+<div style="background:#1a1a1a;padding:10px;margin-bottom:20px;border:1px solid #333;">
+<b>🌍 GLOBAL LINKS</b><br><br>
+
+<a href="http://192.168.0.5" target="_blank">🏠 Home</a> |
+<a href="http://192.168.0.5/tar1090" target="_blank">📡 tar1090</a> |
+<a href="http://192.168.0.5/status" target="_blank">📊 Status</a> |
+<a href="http://192.168.0.5/audio" target="_blank">🎧 Audio</a> |
+<a href="http://192.168.0.5/reports" target="_blank">📑 Reports</a> |
+<a href="http://192.168.0.5/system_snapshot" target="_blank">🖥 Snapshot</a> |
+<a href="http://192.168.0.5/backup-logs" target="_blank">💾 Backup Logs</a> |
+<a href="http://192.168.0.5/dashboard" target="_blank">🧠 OPS Dashboard</a> |
+<a href="http://192.168.0.5/rms.html" target="_blank">📈 RMS</a> |
+<a href="http://192.168.0.5/explosion_heatmap.html" target="_blank">🔥 Heatmap</a> |
+<a href="http://192.168.0.5/explosion_events.html" target="_blank">💥 Events</a> |
+<a href="http://192.168.0.5/inventory" target="_blank">📦 Inventory</a> |
+<a href="http://192.168.0.5/concept_snapshot" target="_blank">📘 Concept</a> |
+<a href="http://192.168.0.5:3000" target="_blank">📊 Grafana</a>
+
+<br><br>
+<span style="color:#ffb;">
+SSH操作のみ実行可 / WebはREAD-ONLY
+</span>
+</div>
+
+<h1>🛠 OPS Unified Summary v5.6</h1>
+
+<!-- ================= FEED ================= -->
+<div class="section">
+<h2>📡 FEED STATUS</h2>
+
+<table>
+<thead>
+<tr>
+<th>Feed</th>
+<th>Service</th>
+<th>State</th>
+<th>Network</th>
+<th>Timestamp</th>
+<th>Link</th>
+</tr>
+</thead>
+<tbody id="feedTable">
+<tr><td colspan="6">Loading...</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- ================= CRITICAL ================= -->
+<div class="section">
+<h2>🚨 CRITICAL</h2>
+<pre id="critical">Loading...</pre>
+</div>
+
+<!-- ================= OPS HEALTH ================= -->
+<div class="section">
+<h2>🩺 OPS HEALTH</h2>
+
+<div class="health-grid">
+  <div class="health-box">
+    <div class="health-title">Audio Core</div>
+    <div class="health-value" id="sumAudio">...</div>
+  </div>
+  <div class="health-box">
+    <div class="health-title">ADS-B Receiver</div>
+    <div class="health-value" id="sumAdsb">...</div>
+  </div>
+  <div class="health-box">
+    <div class="health-title">Aircraft</div>
+    <div class="health-value" id="sumAircraft">...</div>
+  </div>
+  <div class="health-box">
+    <div class="health-title">CPU Temp</div>
+    <div class="health-value" id="sumTemp">...</div>
+  </div>
+  <div class="health-box">
+    <div class="health-title">Disk /</div>
+    <div class="health-value" id="sumDisk">...</div>
+  </div>
+  <div class="health-box">
+    <div class="health-title">Last DD</div>
+    <div class="health-value" id="sumDd">...</div>
+  </div>
+</div>
+
+<pre id="opsHealth">Loading...</pre>
+</div>
+<!-- ============================================================
+ AUDIO FINGERPRINT LEARNING
+ Version : 1.0.0-A+++
+ Updated : 2026-03-28
+
+ Purpose :
+   音紋学習結果の可視化
+   - JSON参照方式（壊れない設計）
+   - 10秒自動更新
+============================================================ -->
+<div class="section">
+<h2>🧠 AUDIO FINGERPRINT LEARNING</h2>
+<pre id="fpSummary">Loading...</pre>
+</div>
+<!-- ================= AUDIO ================= -->
+<div class="section">
+<h2>🎧 AUDIO</h2>
+
+<div>24h Boom : <span id="boom24h">...</span></div>
+<br>
+
+<table>
+<tr><th>Time</th><th>Source</th><th>Play</th></tr>
+<tbody id="events"></tbody>
+</table>
+
+<br>
+<img src="/audio/rms_24h.png" style="max-width:100%">
+<br>
+<pre id="audioStatus">Loading...</pre>
+</div>
+
+<!-- ================= BACKUP ================= -->
+<div class="section">
+<h2>💾 BACKUP</h2>
+<pre id="backupStatus">Loading...</pre>
+</div>
+
+<!-- ================= OPS ================= -->
+<div class="section">
+<h2>🧠 OPS SUMMARY</h2>
+<pre id="opsSummary">Loading...</pre>
+</div>
+
+<p class="small">
+READ-ONLY / Auto refresh 10s / SSH-only operation
+</p>
+
+<script>
+/* ---------- AUDIO FINGERPRINT ---------- */
+function loadFingerprint(){
+fetch('/status/audio_fingerprint_summary.json')
+.then(r=>r.json())
+.then(j=>{
+
+let txt = "";
+
+txt += "Updated        : " + (j.updated_at || "-") + "\n";
+txt += "Model          : " + (j.model_version || "-") + "\n";
+txt += "Train Count    : " + (j.train_count || "-") + "\n";
+txt += "\n";
+
+txt += "Latest Label   : " + (j.latest_label || "-") + "\n";
+txt += "Latest Score   : " + (j.latest_score || "-") + "\n";
+txt += "Source         : " + (j.latest_source || "-") + "\n";
+txt += "\n";
+
+txt += "Status         : " + (j.status || "-") + "\n";
+txt += "\n";
+
+if(j.labels){
+txt += "Labels:\n";
+for(const k in j.labels){
+txt += "  " + k + " : " + j.labels[k] + "\n";
+}
+}
+
+document.getElementById("fpSummary").innerText = txt;
+
+})
+.catch(()=>{
+document.getElementById("fpSummary").innerText = "ERR";
+});
+}
+
+
+/* ---------- 共通安全取得 ---------- */
+function loadText(url,id,callback){
+fetch(url)
+.then(r=>r.text())
+.then(t=>{
+document.getElementById(id).innerText=t;
+if(callback) callback(t);
+})
+.catch(()=>{
+document.getElementById(id).innerText="ERR";
+});
+}
+
+function setSummaryValue(id, text, cls){
+const el = document.getElementById(id);
+el.innerText = text;
+el.className = "health-value " + cls;
+}
+
+function classifyService(v){
+return v === "active" ? "health-ok" : "health-ng";
+}
+
+function classifyTemp(v){
+const n = parseFloat(String(v).replace("C",""));
+if (isNaN(n)) return "health-warn";
+if (n >= 75) return "health-ng";
+if (n >= 60) return "health-warn";
+return "health-ok";
+}
+
+function classifyDisk(v){
+const n = parseInt(String(v).replace("%",""));
+if (isNaN(n)) return "health-warn";
+if (n >= 85) return "health-ng";
+if (n >= 70) return "health-warn";
+return "health-ok";
+}
+
+function classifyAircraft(v){
+const n = parseInt(v);
+if (isNaN(n)) return "health-warn";
+if (n <= 0) return "health-ng";
+if (n <= 2) return "health-warn";
+return "health-ok";
+}
+
+/* ---------- CRITICAL ---------- */
+function updateCritical(opsText){
+let status="";
+
+if(opsText.includes('"failed_units": "0"'))
+status+="System Units : OK\n";
+else
+status+="System Units : CHECK\n";
+
+if(opsText.includes('"audio_recorder": "active"'))
+status+="Audio Recorder : ACTIVE\n";
+else
+status+="Audio Recorder : INACTIVE\n";
+
+if(opsText.includes('"backup_rsync": "active"'))
+status+="Backup : ACTIVE\n";
+else
+status+="Backup : IDLE\n";
+
+document.getElementById("critical").innerText=status;
+}
+
+/* ---------- OPS HEALTH ---------- */
+function loadHealth(){
+fetch('/status/ops_health.json')
+.then(r=>r.json())
+.then(d=>{
+let txt = "";
+
+txt += "Host            : " + (d.host || "-") + "\n";
+txt += "Time            : " + (d.time || "-") + "\n";
+txt += "Uptime          : " + (d.uptime || "-") + "\n";
+txt += "Load            : " + (d.load || "-") + "\n";
+txt += "Disk /          : " + (d.disk_root || "-") + "\n";
+txt += "CPU Temp        : " + (d.cpu_temp || "-") + "\n";
+txt += "\n";
+
+txt += "Audio Core      : " + (d.audio_core_state || "-") + " / enabled=" + (d.audio_core_enabled || "-") + "\n";
+txt += "ADS-B Receiver  : " + (d.adsb_state || "-") + " / enabled=" + (d.adsb_enabled || "-") + "\n";
+txt += "FR24            : " + (d.fr24_state || "-") + "\n";
+txt += "PlaneFinder     : " + (d.pf_state || "-") + "\n";
+txt += "\n";
+
+txt += "Aircraft Count  : " + (d.aircraft_count || "-") + "\n";
+txt += "Aircraft Msgs   : " + (d.aircraft_messages || "-") + "\n";
+txt += "\n";
+
+txt += "RMS Summary     : " + (d.rms_summary || "-") + "\n";
+txt += "Last Event      : " + (d.last_event_row || "-") + "\n";
+txt += "Last Boom File  : " + (d.last_boom_name || d.last_boom_file || "-") + "\n";
+txt += "Last DD Backup  : " + (d.last_dd_name || d.last_dd_file || "-") + "\n";
+
+document.getElementById("opsHealth").innerText = txt;
+
+setSummaryValue("sumAudio",
+  d.audio_core_state || "-",
+  classifyService(d.audio_core_state)
+);
+
+setSummaryValue("sumAdsb",
+  d.adsb_state || "-",
+  classifyService(d.adsb_state)
+);
+
+setSummaryValue("sumAircraft",
+  d.aircraft_count || "-",
+  classifyAircraft(d.aircraft_count)
+);
+
+setSummaryValue("sumTemp",
+  d.cpu_temp || "-",
+  classifyTemp(d.cpu_temp)
+);
+
+setSummaryValue("sumDisk",
+  d.disk_root || "-",
+  classifyDisk(d.disk_root)
+);
+
+setSummaryValue("sumDd",
+  d.last_dd_name || "-",
+  (d.last_dd_name ? "health-ok" : "health-warn")
+);
+})
+.catch(()=>{
+document.getElementById("opsHealth").innerText = "ERR";
+setSummaryValue("sumAudio","ERR","health-ng");
+setSummaryValue("sumAdsb","ERR","health-ng");
+setSummaryValue("sumAircraft","ERR","health-ng");
+setSummaryValue("sumTemp","ERR","health-ng");
+setSummaryValue("sumDisk","ERR","health-ng");
+setSummaryValue("sumDd","ERR","health-ng");
+});
+}
+
+/* ---------- AUDIO ---------- */
+function loadAudio(){
+fetch('/recordings/data/boom_24h.json')
+.then(r=>r.json())
+.then(j=>{
+if(typeof j.boom_24h !== "undefined"){
+document.getElementById('boom24h').innerText = j.boom_24h;
+}else{
+document.getElementById('boom24h').innerText = JSON.stringify(j);
+}
+})
+.catch(()=>{
+document.getElementById('boom24h').innerText = 'ERR';
+});
+
+loadText('/status/audio_detect_status.json','audioStatus');
+
+fetch('/recordings/data/unified_events.json')
+.then(r=>r.json())
+.then(data=>{
+const tb=document.getElementById('events');
+tb.innerHTML="";
+if(Array.isArray(data)){
+if(data.length===0){
+tb.innerHTML="<tr><td colspan='3'>NO DATA</td></tr>";
+return;
+}
+data.slice(0,10).forEach(ev=>{
+tb.innerHTML +=
+"<tr><td>"+(ev.ts_utc || "-")+
+"</td><td>"+(ev.source || "-")+
+"</td><td><a href='"+(ev.wav_path || "#")+
+"' target='_blank'>play</a></td></tr>";
+});
+}
+})
+.catch(()=>{
+document.getElementById('events').innerHTML =
+"<tr><td colspan='3'>ERR</td></tr>";
+});
+}
+
+/* ---------- FEED（表形式） ---------- */
+function loadFeedJSON(url, feedName, link){
+fetch(url)
+.then(r=>r.json())
+.then(data=>{
+const tb=document.getElementById('feedTable');
+if(tb.innerHTML.includes("Loading")) tb.innerHTML="";
+
+let stateClass = data.state === "active" ? "ok" : "ng";
+let networkClass = data.network === "ESTABLISHED" ? "ok" : "warn";
+
+tb.innerHTML += `
+<tr>
+<td><b>${feedName}</b></td>
+<td>${data.service || "-"}</td>
+<td class="${stateClass}">${data.state || "-"}</td>
+<td class="${networkClass}">${data.network || "-"}</td>
+<td>${data.timestamp || "-"}</td>
+<td>${link ? `<a href="${link}" target="_blank">Account</a>` : "-"}</td>
+</tr>
+`;
+})
+.catch(()=>{
+const tb=document.getElementById('feedTable');
+if(tb.innerHTML.includes("Loading")) tb.innerHTML="";
+tb.innerHTML += `
+<tr>
+<td><b>${feedName}</b></td>
+<td colspan="5" class="ng">ERROR</td>
+</tr>
+`;
+});
+}
+
+function loadFeed(){
+document.getElementById('feedTable').innerHTML =
+'<tr><td colspan="6">Loading...</td></tr>';
+
+loadFeedJSON('/feed_status_adsbx.json','ADSBX',null);
+loadFeedJSON('/feed_status_fr24.json','FR24',
+'https://www.flightradar24.com/account/data-sharing');
+loadFeedJSON('/feed_status_pf.json','PlaneFinder',
+'https://planefinder.net/my-account/');
+loadFeedJSON('/feed_status_audio_recorder.json','AudioRecorder',null);
+}
+
+/* ---------- BACKUP ---------- */
+function loadBackup(){
+loadText('/backup-logs/status.json','backupStatus');
+}
+
+/* ---------- OPS ---------- */
+function loadOps(){
+loadText('/status/ops_unified.json','opsSummary',updateCritical);
+}
+
+/* ---------- 実行 ---------- */
+function refreshAll(){
+loadFeed();
+loadOps();
+loadHealth();
+loadAudio();
+loadBackup();
+loadFingerprint();   // ←追加
+}
+
+refreshAll();
+setInterval(refreshAll,10000);
+
+</script>
+
+</body>
+</html>

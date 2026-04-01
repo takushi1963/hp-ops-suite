@@ -1,0 +1,15 @@
+[Unit]
+Description=OPS Audio Ring Recorder (60s WAV, UTC)
+After=network-online.target time-sync.target sound.target
+Wants=network-online.target time-sync.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/ops-audio-ring.sh
+Restart=always
+RestartSec=2
+Nice=5
+
+[Install]
+WantedBy=multi-user.target
+

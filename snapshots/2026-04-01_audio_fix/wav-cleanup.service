@@ -1,0 +1,6 @@
+[Unit]
+Description=WAV Cleanup
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/wav-cleanup.sh

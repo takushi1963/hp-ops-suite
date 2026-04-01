@@ -1,6 +1,13 @@
+# ============================================================
+# File    : /home/taku/projects/ops/super-ops-agent.service
+# Version : 2.0.0-A+++
+# Updated : 2026-03-24
+# Purpose :
+#   Super OPS Agent 常駐監視 service
+# ============================================================
+
 [Unit]
-Description=HP-ADS-B Super OPS Agent (Orchestrator Type)
-Documentation=https://github.com/hp-adsb/ops
+Description=HP-ADS-B Super OPS Agent
 After=network-online.target
 Wants=network-online.target
 
@@ -9,25 +16,15 @@ Type=simple
 User=root
 Group=root
 WorkingDirectory=/home/taku/projects/ops
-
-# Python スクリプト実行
 ExecStart=/usr/bin/python3 /home/taku/projects/ops/super-ops-agent.py monitor
-
-# 自動再起動
 Restart=always
 RestartSec=10
-
-# ログ出力
 StandardOutput=journal
 StandardError=journal
 SyslogIdentifier=super-ops-agent
-
-# リソース制限
-MemoryLimit=512M
-CPUQuota=50%
-
-# タイムアウト
 TimeoutStopSec=30
+MemoryMax=512M
+CPUQuota=50%
 
 [Install]
 WantedBy=multi-user.target

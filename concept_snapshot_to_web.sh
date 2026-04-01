@@ -13,6 +13,7 @@
 #   - Web 出力のみ root 権限が必要
 #
 
+
 set -euo pipefail
 
 REAL_USER="$(logname)"
@@ -22,7 +23,8 @@ NOW="$(date '+%Y-%m-%d %H:%M:%S')"
 SRC_BASE="/home/${REAL_USER}/projects"
 DST="/var/www/html/concept_snapshot"
 
-mkdir -p "$DST"
+#mkdir -p "$DST"
+mkdir -p "${DST}"
 
 TXT_OUT="$DST/concept_snapshot.txt"
 HTML_INDEX="$DST/index.html"

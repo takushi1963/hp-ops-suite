@@ -1,6 +1,13 @@
+# ============================================================
+# File    : /home/taku/projects/ops/super-ops-agent-bootstrap.service
+# Version : 2.0.0-A+++
+# Updated : 2026-03-24
+# Purpose :
+#   Super OPS Agent bootstrap 実行用 oneshot service
+# ============================================================
+
 [Unit]
-Description=HP-ADS-B Super OPS Bootstrap (Orchestrator)
-Documentation=https://github.com/hp-adsb/ops
+Description=HP-ADS-B Super OPS Bootstrap
 After=network-online.target
 Wants=network-online.target
 
@@ -9,14 +16,8 @@ Type=oneshot
 User=root
 Group=root
 WorkingDirectory=/home/taku/projects/ops
-
-# Bootstrap 実行
 ExecStart=/usr/bin/python3 /home/taku/projects/ops/super-ops-agent.py bootstrap
-
-# ログ出力
 StandardOutput=journal
 StandardError=journal
 SyslogIdentifier=super-ops-bootstrap
-
-# タイムアウト
-TimeoutStartSec=600
+TimeoutStartSec=900

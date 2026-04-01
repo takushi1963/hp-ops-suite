@@ -1,13 +1,19 @@
+# ============================================================
+# File    : /home/taku/projects/ops/super-ops-agent-bootstrap.timer
+# Version : 2.0.0-A+++
+# Updated : 2026-03-24
+# Purpose :
+#   Super OPS Bootstrap 定期実行 timer
+# ============================================================
+
 [Unit]
 Description=HP-ADS-B Super OPS Bootstrap Timer
-Documentation=https://github.com/hp-adsb/ops
 Requires=super-ops-agent-bootstrap.service
 
 [Timer]
-# Hourly at :00
-OnCalendar=hourly
 OnBootSec=5min
-Persistent=yes
+OnCalendar=hourly
+Persistent=true
 
 [Install]
 WantedBy=timers.target

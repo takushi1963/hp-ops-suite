@@ -1,0 +1,17 @@
+# ============================================================
+# File    : backup-rsync.service
+# Version : 1.0.0-A+++
+# Updated : 2026-02-18
+# Purpose :
+#   Daily NAS rsync Backup
+# ============================================================
+
+[Unit]
+Description=Daily NAS rsync Backup
+Wants=network-online.target
+After=network-online.target
+OnFailure=backup-notify@%n.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/backup-rsync.sh

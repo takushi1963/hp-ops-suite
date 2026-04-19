@@ -1,39 +1,60 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# ============================================================
+# File    : /home/taku/projects/ops/deploy-web.sh
+# Version : 2.0.0-A+++
+# Updated : 2026-04-19
 #
-# Name    : deploy-web.sh
-# Version : 1.2.0
-# Updated : 2026-01-06
+# Purpose :
+#   OPS Web ダッシュボードの静的ファイルを /var/www/html/ に安全配置する
 #
-# 目的 :
-#   - ops/web（Git 管理の原本）を /var/www/html に配置
-#   - 表示専用 HTML のみを対象とする
+# Notes :
+#   - 絶対に --delete は使わない
+#   - /var/www/html/status などの生成物を消さない
+#   - 静的ファイルだけを上書き配置する
+#   - 配置先ディレクトリ自体は維持する
 #
-# 方針 :
-#   - 日本語メッセージのみ
-#   - 余計な出力は一切表示しない
-#
+# ChangeLog :
+#   2.0.0-A+++ : --delete を廃止し、安全配置方式へ変更
+# ============================================================
 
 set -euo pipefail
 
-SRC="$(cd "$(dirname "$0")" && pwd)/web/"
-DST="/var/www/html/"
+SRC="/home/taku/projects/ops/web/"
+DST="/var/www/html"
 
-echo "=== Web ダッシュボード配置開始 ==="
+echo "=== Web ダッシュボード安全配置開始 ==="
 
-# sudo の lecture / 余計な出力を抑止
-export SUDO_ASKPASS=/bin/false
-sudo -v >/dev/null 2>&1 || {
-  echo "ERROR: sudo 権限が必要です"
+# 配置元確認
+if [[ ! -d "$SRC" ]]; then
+  echo "[ERROR] 配置元ディレクトリがありません: $SRC" >&2
   exit 1
-}
+fi
 
-# rsync 完全静音（--quiet + 出力破棄）
-sudo rsync -a --delete \
-  --quiet \
-  --exclude=".git" \
-  --exclude=".gitmodules" \
-  "$SRC" "$DST" \
-  >/dev/null 2>&1
+# 配置先確認
+if [[ ! -d "$DST" ]]; then
+  echo "[INFO] 配置先ディレクトリを作成します: $DST"
+  sudo mkdir -p "$DST"
+fi
 
-echo "配置完了: /var/www/html/"
+# 静的ファイルのみ安全配置
+sudo rsync -a \
+  --exclude '.git/' \
+  --exclude '*.bak' \
+  --exclude '*.tmp' \
+  --exclude 'status/' \
+  --exclude 'reports/' \
+  --exclude 'concept_snapshot/' \
+  --exclude 'system_snapshot/' \
+  --exclude 'backup-logs/' \
+  --exclude 'backup/' \
+  --exclude 'audio-events/' \
+  --exclude 'audio-files/' \
+  "$SRC" "$DST/"
+
+# 権限を軽く整える
+sudo find "$DST" -maxdepth 1 -type f -name '*.html' -exec chmod 644 {} \;
+sudo find "$DST" -maxdepth 1 -type f -name '*.css'  -exec chmod 644 {} \;
+sudo find "$DST" -maxdepth 1 -type f -name '*.js'   -exec chmod 644 {} \;
+
+echo "配置完了: $DST"
 echo "=== 完了 ==="

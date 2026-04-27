@@ -1,5 +1,5 @@
-# ROLE: OPS
 #!/bin/bash
+# ROLE: OPS
 # ============================================================
 # File    : /usr/local/bin/ops-audio-ring.sh
 # Version : 1.1.0

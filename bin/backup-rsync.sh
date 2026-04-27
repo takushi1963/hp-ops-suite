@@ -1,5 +1,5 @@
-# ROLE: BACKUP
 #!/bin/bash
+# ROLE: BACKUP
 # ROLE: BACKUP
 # ============================================================
 # File    : backup-rsync.sh

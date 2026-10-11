@@ -1,0 +1,2 @@
+PASS: original CSS and section order; unique IDs and script target IDs; Node syntax; safe DOM text and audio URLs; zero values; DD unknown; serial fetch; HTTP/schema failure; stale-value clearing.
+Not applied. Real browser screenshot comparison not performed.

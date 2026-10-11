@@ -1,0 +1,26 @@
+[
+  {
+    "target": "/var/www/html/ops-legacy-monitor.js",
+    "payload": "ops-legacy-monitor.js",
+    "sha": null,
+    "mode": 420
+  },
+  {
+    "target": "/var/www/html/index.html",
+    "payload": "index.html",
+    "sha": "2407a2fb39bc9fb829ffca3cf9e4b44a6bbada883ed9a31fc815ec3092c81db1",
+    "mode": 420
+  },
+  {
+    "target": "/home/taku/projects/ops/web/index.html",
+    "payload": "index.html",
+    "sha": "2407a2fb39bc9fb829ffca3cf9e4b44a6bbada883ed9a31fc815ec3092c81db1",
+    "mode": 420
+  },
+  {
+    "target": "/home/taku/ops/www/index.html",
+    "payload": "index.html",
+    "sha": "2407a2fb39bc9fb829ffca3cf9e4b44a6bbada883ed9a31fc815ec3092c81db1",
+    "mode": 420
+  }
+]

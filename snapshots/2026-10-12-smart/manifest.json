@@ -1,0 +1,14 @@
+[
+  {
+    "target": "/usr/local/lib/ops-dashboard-repair/smart_guard.py",
+    "snapshot": "files/usr/local/lib/ops-dashboard-repair/smart_guard.py",
+    "sha256": "dcb2a868d3bd5d7aa04b30a989e6644be04e3a950c1503427bdc3c76e3547702",
+    "mode": "0o644"
+  },
+  {
+    "target": "/home/taku/scripts/backup/backup_dd.sh",
+    "snapshot": "files/home/taku/scripts/backup/backup_dd.sh",
+    "sha256": "df5df0896e90ec914f7ed3be646a714d15668208264dbc9802086e1971e87293",
+    "mode": "0o755"
+  }
+]

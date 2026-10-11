@@ -1,0 +1,14 @@
+[Unit]
+Description=Ollama Service
+After=network-online.target
+
+[Service]
+ExecStart=/usr/local/bin/ollama serve
+User=ollama
+Group=ollama
+Restart=always
+RestartSec=3
+Environment="PATH=/home/taku/.local/bin:/home/taku/bin:/home/taku/.cargo/bin:/home/taku/.local/bin:/home/taku/.local/bin:/run/user/1000/fnm_multishells/1656821_1779183811781/bin:/home/taku/.local/share/fnm:/run/user/1000/fnm_multishells/1656816_1779183811736/bin:/home/taku/.local/share/fnm:/run/user/1000/fnm_multishells/1656813_1779183811697/bin:/home/taku/.local/share/fnm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
+
+[Install]
+WantedBy=default.target

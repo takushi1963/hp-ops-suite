@@ -1,0 +1,275 @@
+{
+  "captured_at": "2026-10-12T00:34:47.064120+09:00",
+  "files": [
+    {
+      "target": "/etc/systemd/system/backup-dd.service",
+      "snapshot": "files/etc/systemd/system/backup-dd.service",
+      "sha256": "e5fe8e77cd326f71cb9aaf95e8ac1ba1593458c8bfb08149cc7a31d947a31c88",
+      "mode": "0o644"
+    },
+    {
+      "target": "/etc/systemd/system/backup-dd.service.d/documentation.conf",
+      "snapshot": "files/etc/systemd/system/backup-dd.service.d/documentation.conf",
+      "sha256": "f6bb0e4d5de725873364439ef32862ad2efe9fa62aaa943594b4cb08e871bb64",
+      "mode": "0o644"
+    },
+    {
+      "target": "/etc/systemd/system/backup-dd.service.d/ops-repair.conf",
+      "snapshot": "files/etc/systemd/system/backup-dd.service.d/ops-repair.conf",
+      "sha256": "27d57701a92b623757711f18aeba17f089df44c13cead5caca41418a62804d89",
+      "mode": "0o644"
+    },
+    {
+      "target": "/etc/systemd/system/backup-dd.timer",
+      "snapshot": "files/etc/systemd/system/backup-dd.timer",
+      "sha256": "d1bfad08796c6b35265ba2dbabfb57947c58cd31f33fa006824a8f41394e0577",
+      "mode": "0o644"
+    },
+    {
+      "target": "/etc/systemd/system/backup-rsync.service",
+      "snapshot": "files/etc/systemd/system/backup-rsync.service",
+      "sha256": "42c9cbe7d80433bbfd2e69ebe2a57f009a48afa260593a209f0de2c3258b53e8",
+      "mode": "0o644"
+    },
+    {
+      "target": "/etc/systemd/system/backup-rsync.timer",
+      "snapshot": "files/etc/systemd/system/backup-rsync.timer",
+      "sha256": "c8a0e1cec877424678ecffe51f8d3f91cfd3c21540567dc2461f7c59c97861f2",
+      "mode": "0o644"
+    },
+    {
+      "target": "/etc/systemd/system/backup-selftest.service",
+      "snapshot": "files/etc/systemd/system/backup-selftest.service",
+      "sha256": "6c42821265aaaa7fcc55febd58267cc983e6b5069e2244c6ef18b2f99fe06887",
+      "mode": "0o644"
+    },
+    {
+      "target": "/etc/systemd/system/backup-selftest.timer",
+      "snapshot": "files/etc/systemd/system/backup-selftest.timer",
+      "sha256": "33bbeebd39a0c42aaccf21fbac65b6ef48669642986789c113413de97154a91a",
+      "mode": "0o644"
+    },
+    {
+      "target": "/etc/systemd/system/feed-status.service.d/ops-repair.conf",
+      "snapshot": "files/etc/systemd/system/feed-status.service.d/ops-repair.conf",
+      "sha256": "a766e43d8de44ef823e471f001a3bd53271994ac5453150a74efb983dc0bd0ea",
+      "mode": "0o644"
+    },
+    {
+      "target": "/etc/systemd/system/ollama.service",
+      "snapshot": "files/etc/systemd/system/ollama.service",
+      "sha256": "919a440b59a470891d95efb52dfc9833973650f055aadb998f291aa08d1fcdac",
+      "mode": "0o644"
+    },
+    {
+      "target": "/etc/systemd/system/ops-band-analysis.service",
+      "snapshot": "files/etc/systemd/system/ops-band-analysis.service",
+      "sha256": "e497c42a90910e7b29ec627543e93b0dd830178f001c74d57a797a91eced3b07",
+      "mode": "0o644"
+    },
+    {
+      "target": "/etc/systemd/system/ops-band-analysis.timer",
+      "snapshot": "files/etc/systemd/system/ops-band-analysis.timer",
+      "sha256": "20fd30d35840c8e1693c34755d860e7ecf7a85df3ba859d0c5bf963be3f9ceb2",
+      "mode": "0o644"
+    },
+    {
+      "target": "/etc/systemd/system/ops-full-healthcheck.service",
+      "snapshot": "files/etc/systemd/system/ops-full-healthcheck.service",
+      "sha256": "e3b0e8523ed3ad4252080aaa07efe7f67aab478139d46c181308cb8f1d211a79",
+      "mode": "0o644"
+    },
+    {
+      "target": "/etc/systemd/system/ops-full-healthcheck.service.d/ops-repair.conf",
+      "snapshot": "files/etc/systemd/system/ops-full-healthcheck.service.d/ops-repair.conf",
+      "sha256": "1393b14a59baddd7ec1f24db1f480077cdc267c0155e1ad7e0bfe3cba995a0e3",
+      "mode": "0o644"
+    },
+    {
+      "target": "/etc/systemd/system/ops-full-healthcheck.timer",
+      "snapshot": "files/etc/systemd/system/ops-full-healthcheck.timer",
+      "sha256": "e4e3db7253980f6486629850c1bd7a2ef793e855dfe7e61d6efbcd45da006596",
+      "mode": "0o644"
+    },
+    {
+      "target": "/etc/systemd/system/ops-health-json.service",
+      "snapshot": "files/etc/systemd/system/ops-health-json.service",
+      "sha256": "56b41bd2b7189cbcbb703ff97dff3b4b5f0a49e78ab789995c87099c2dc6dd58",
+      "mode": "0o644"
+    },
+    {
+      "target": "/etc/systemd/system/ops-health-json.service.d/ops-repair.conf",
+      "snapshot": "files/etc/systemd/system/ops-health-json.service.d/ops-repair.conf",
+      "sha256": "e31bde658805975c525277d7334732afd5bafe29bf426e9503a839c5253d56a9",
+      "mode": "0o644"
+    },
+    {
+      "target": "/etc/systemd/system/ops-health-json.timer",
+      "snapshot": "files/etc/systemd/system/ops-health-json.timer",
+      "sha256": "6d5e0e3cbd9798645324fda0b36d483ce5812af0ae6582bc1b082b7c10d5e5b1",
+      "mode": "0o644"
+    },
+    {
+      "target": "/home/taku/ops/www/index.html",
+      "snapshot": "files/home/taku/ops/www/index.html",
+      "sha256": "2407a2fb39bc9fb829ffca3cf9e4b44a6bbada883ed9a31fc815ec3092c81db1",
+      "mode": "0o644"
+    },
+    {
+      "target": "/home/taku/projects/ops/web/index.html",
+      "snapshot": "files/home/taku/projects/ops/web/index.html",
+      "sha256": "2407a2fb39bc9fb829ffca3cf9e4b44a6bbada883ed9a31fc815ec3092c81db1",
+      "mode": "0o775"
+    },
+    {
+      "target": "/home/taku/scripts/backup/backup_dd.sh",
+      "snapshot": "files/home/taku/scripts/backup/backup_dd.sh",
+      "sha256": "a0b760aa7d2aa48bb4f4b0921a19bcece1e12ce3dce297665525c0f425d2ab26",
+      "mode": "0o755"
+    },
+    {
+      "target": "/home/taku/scripts/backup/backup_rsync.sh",
+      "snapshot": "files/home/taku/scripts/backup/backup_rsync.sh",
+      "sha256": "7d41b63784a67e37183d88b45d2ec7fb82b4e765787705e57803488cfa1e218d",
+      "mode": "0o755"
+    },
+    {
+      "target": "/usr/local/bin/adsbx-status-check.sh",
+      "snapshot": "files/usr/local/bin/adsbx-status-check.sh",
+      "sha256": "f271f27388267a10bdaee3c515b178a94c45a8b85735356a0d5e41a8b58ef593",
+      "mode": "0o755"
+    },
+    {
+      "target": "/usr/local/bin/audio_ops_check.sh",
+      "snapshot": "files/usr/local/bin/audio_ops_check.sh",
+      "sha256": "d9064f4230d5d630ceb74564a004acce7899ff94424d3cf39b860fd2de67d558",
+      "mode": "0o755"
+    },
+    {
+      "target": "/usr/local/bin/backup-dd.sh",
+      "snapshot": "files/usr/local/bin/backup-dd.sh",
+      "sha256": "f26f9271f69dd76ec2b06a8850f20ae84d02a4913c8b4d63d19215c18b13a6bb",
+      "mode": "0o755"
+    },
+    {
+      "target": "/usr/local/bin/backup-rsync.sh",
+      "snapshot": "files/usr/local/bin/backup-rsync.sh",
+      "sha256": "c3783d58279d0456d36062c6ac83774a5134ba4a5b3de32e2650818031d323cb",
+      "mode": "0o755"
+    },
+    {
+      "target": "/usr/local/bin/backup_health_check.sh",
+      "snapshot": "files/usr/local/bin/backup_health_check.sh",
+      "sha256": "239b4ceaaf3e218d28fbc2831ff1baa908c36da495dae3fdba181ea3b8e0e0c5",
+      "mode": "0o755"
+    },
+    {
+      "target": "/usr/local/bin/backup_selftest.sh",
+      "snapshot": "files/usr/local/bin/backup_selftest.sh",
+      "sha256": "59b0e7b1e34e60d7bd9fb9c89083813678ac20a64f75a34b9362abc569793de9",
+      "mode": "0o755"
+    },
+    {
+      "target": "/usr/local/bin/backup_status_check.sh",
+      "snapshot": "files/usr/local/bin/backup_status_check.sh",
+      "sha256": "f271f27388267a10bdaee3c515b178a94c45a8b85735356a0d5e41a8b58ef593",
+      "mode": "0o755"
+    },
+    {
+      "target": "/usr/local/bin/feed_status_check.sh",
+      "snapshot": "files/usr/local/bin/feed_status_check.sh",
+      "sha256": "f271f27388267a10bdaee3c515b178a94c45a8b85735356a0d5e41a8b58ef593",
+      "mode": "0o755"
+    },
+    {
+      "target": "/usr/local/bin/fr24-status-check.sh",
+      "snapshot": "files/usr/local/bin/fr24-status-check.sh",
+      "sha256": "f271f27388267a10bdaee3c515b178a94c45a8b85735356a0d5e41a8b58ef593",
+      "mode": "0o755"
+    },
+    {
+      "target": "/usr/local/bin/hp_ops_health_json.sh",
+      "snapshot": "files/usr/local/bin/hp_ops_health_json.sh",
+      "sha256": "f271f27388267a10bdaee3c515b178a94c45a8b85735356a0d5e41a8b58ef593",
+      "mode": "0o755"
+    },
+    {
+      "target": "/usr/local/bin/lowfreq-summary-json.sh",
+      "snapshot": "files/usr/local/bin/lowfreq-summary-json.sh",
+      "sha256": "f271f27388267a10bdaee3c515b178a94c45a8b85735356a0d5e41a8b58ef593",
+      "mode": "0o755"
+    },
+    {
+      "target": "/usr/local/bin/ops-status-builder.sh",
+      "snapshot": "files/usr/local/bin/ops-status-builder.sh",
+      "sha256": "f271f27388267a10bdaee3c515b178a94c45a8b85735356a0d5e41a8b58ef593",
+      "mode": "0o755"
+    },
+    {
+      "target": "/usr/local/bin/ops_full_healthcheck.sh",
+      "snapshot": "files/usr/local/bin/ops_full_healthcheck.sh",
+      "sha256": "ff37103fe1599f3726822e3a80be1b6842af98be9c39c16e6334a1359a278b64",
+      "mode": "0o755"
+    },
+    {
+      "target": "/usr/local/bin/pf-status-check.sh",
+      "snapshot": "files/usr/local/bin/pf-status-check.sh",
+      "sha256": "f271f27388267a10bdaee3c515b178a94c45a8b85735356a0d5e41a8b58ef593",
+      "mode": "0o755"
+    },
+    {
+      "target": "/usr/local/bin/unified-events-web.py",
+      "snapshot": "files/usr/local/bin/unified-events-web.py",
+      "sha256": "dc273bae1d3eeb1df028408abf7a70ddaadc15269168d70d13de911b27d6db60",
+      "mode": "0o755"
+    },
+    {
+      "target": "/usr/local/lib/ops-dashboard-repair/analyze.py",
+      "snapshot": "files/usr/local/lib/ops-dashboard-repair/analyze.py",
+      "sha256": "53fb8f7c8ac2057bc2fb68383d8ef64ace08a177901b97547ab64d27b4f079bf",
+      "mode": "0o644"
+    },
+    {
+      "target": "/usr/local/lib/ops-dashboard-repair/check.py",
+      "snapshot": "files/usr/local/lib/ops-dashboard-repair/check.py",
+      "sha256": "291bb48b546a31a47600c2adbc8c19b12f3fda94f7e31ced124b2480d932cd03",
+      "mode": "0o644"
+    },
+    {
+      "target": "/usr/local/lib/ops-dashboard-repair/collector.py",
+      "snapshot": "files/usr/local/lib/ops-dashboard-repair/collector.py",
+      "sha256": "c2269a768f88a87f29608ff3fa2dda27832bfe5812f66f67543b6e0f1d260f36",
+      "mode": "0o644"
+    },
+    {
+      "target": "/var/www/html/adsb/index.html",
+      "snapshot": "files/var/www/html/adsb/index.html",
+      "sha256": "4c385b731d72f245de6a85b0f83d4c1be6c7f66c8df90b8de8cda443eee37e96",
+      "mode": "0o664"
+    },
+    {
+      "target": "/var/www/html/backup/index.html",
+      "snapshot": "files/var/www/html/backup/index.html",
+      "sha256": "d67c13d0af64b481ade33632f5b4fbba0dc3d6ca6c350134b392f0d0823f7a38",
+      "mode": "0o664"
+    },
+    {
+      "target": "/var/www/html/index.html",
+      "snapshot": "files/var/www/html/index.html",
+      "sha256": "2407a2fb39bc9fb829ffca3cf9e4b44a6bbada883ed9a31fc815ec3092c81db1",
+      "mode": "0o644"
+    },
+    {
+      "target": "/var/www/html/ops-monitor.js",
+      "snapshot": "files/var/www/html/ops-monitor.js",
+      "sha256": "976c556d2fcaee80bf3a0f93a885f326d5e09b53a3a0a8d8e2182380ba9a8dfd",
+      "mode": "0o644"
+    },
+    {
+      "target": "/var/www/html/ops/index.html",
+      "snapshot": "files/var/www/html/ops/index.html",
+      "sha256": "f7c74a39b59523390683ce2aedd472762d85824b459344766ffc11ca9b5985d2",
+      "mode": "0o644"
+    }
+  ]
+}

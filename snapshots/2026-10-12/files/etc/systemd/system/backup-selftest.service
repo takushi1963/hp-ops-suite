@@ -1,0 +1,6 @@
+[Unit]
+Description=Backup Self-Test
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/backup_selftest.sh

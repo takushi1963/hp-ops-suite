@@ -1,0 +1,33 @@
+# ============================================================
+# File    : backup-rsync.service
+# Version : 1.0.0-A+++
+# Updated : 2026-02-18
+# Purpose :
+#   Daily NAS rsync Backup
+# ============================================================
+
+
+[Unit]
+Description=Scheduled Incremental Backup (rsync)
+Documentation=man:rsync(1)
+Wants=network-online.target remote-fs.target
+After=network-online.target remote-fs.target
+ConditionPathIsMountPoint=/mnt/backup
+
+[Service]
+Type=oneshot
+User=root
+Group=root
+ExecStart=/usr/local/bin/backup-rsync.sh
+
+Nice=10
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7
+
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=false
+ReadWritePaths=/mnt/backup /var/log/backup /home/taku/scripts /home/taku/ops-git /home/taku/recordings
+
+TimeoutStartSec=12h

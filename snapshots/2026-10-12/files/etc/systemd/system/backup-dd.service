@@ -1,0 +1,29 @@
+[Unit]
+Description=Monthly Full Disk Backup (dd)
+Documentation=file:/usr/local/share/backup/README.md
+Wants=network-online.target
+After=network-online.target
+ConditionPathIsMountPoint=/mnt/backup
+
+[Service]
+Type=oneshot
+User=root
+Group=root
+
+ExecStart=/usr/local/bin/backup-dd.sh
+
+# 同時実行防止
+ExecStartPre=/usr/bin/flock -n /run/backup-dd.lock -c true
+
+# 実行時間が長い想定
+TimeoutStartSec=0
+
+# 失敗時の挙動
+StandardOutput=journal
+StandardError=journal
+
+Nice=10
+IOSchedulingClass=idle
+
+[Install]
+WantedBy=multi-user.target

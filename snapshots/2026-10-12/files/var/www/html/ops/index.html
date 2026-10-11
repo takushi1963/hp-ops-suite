@@ -1,0 +1,85 @@
+<!--
+ File    : index.html
+ Version : 1.0.0
+ Updated : 2026-01-06
+ Purpose : OPS Dashboard (ENTRY POINT / READ ONLY)
+-->
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>OPS Dashboard</title>
+<style>
+body {
+  font-family: monospace;
+  background: #111;
+  color: #eee;
+  padding: 20px;
+}
+h1 { color: #9cf; }
+h2 { color: #7ad; margin-top: 30px; }
+.box {
+  background: #222;
+  padding: 12px;
+  margin: 16px 0;
+  border-left: 5px solid #7ad;
+}
+a { color: #8fd; text-decoration: none; }
+a:hover { text-decoration: underline; }
+code {
+  background: #000;
+  padding: 8px;
+  display: block;
+  margin-top: 6px;
+  white-space: pre-wrap;
+}
+.small { opacity: .8; font-size: 90%; }
+</style>
+</head>
+
+<body>
+
+<h1>🧭 OPS Dashboard</h1>
+<p class="small">status-first / read-only entry point</p>
+
+<div class="box">
+  <h2>🔎 Overall</h2>
+  <p>全系統の横断状況確認</p>
+  <code>cd ~/projects/ops && ./ops-status.sh</code>
+</div>
+
+<div class="box">
+  <h2>💾 Backup</h2>
+  <p>バックアップ状況</p>
+  <code>/usr/local/bin/backup-status.sh</code>
+</div>
+
+<div class="box">
+  <h2>✈ ADS-B</h2>
+  <p>受信・配信・MLAT 状況</p>
+  <code>/usr/local/bin/adsb-status.sh</code>
+</div>
+
+<div class="box">
+  <h2>🎧 Audio</h2>
+  <p>録音・相関状況</p>
+  <code>/usr/local/bin/audio-status.sh</code>
+</div>
+
+<div class="box">
+  <h2>📘 Documentation</h2>
+  <ul>
+    <li><a href="/backup/">Backup Docs</a></li>
+    <li><a href="/adsb/">ADS-B Docs</a></li>
+    <li><a href="/audio/">Audio Docs</a></li>
+  </ul>
+</div>
+
+<p class="small">
+  ⚠ This page is read-only.<br>
+  All status commands must be executed via SSH.
+</p>
+
+</body>
+</html>

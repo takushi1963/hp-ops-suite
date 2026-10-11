@@ -1,0 +1,12 @@
+[Unit]
+Description=Update OPS Health JSON every 30 seconds
+
+[Timer]
+OnBootSec=20
+OnUnitActiveSec=30
+AccuracySec=5s
+Persistent=true
+Unit=ops-health-json.service
+
+[Install]
+WantedBy=timers.target

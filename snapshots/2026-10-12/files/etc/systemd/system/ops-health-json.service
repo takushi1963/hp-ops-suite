@@ -1,0 +1,7 @@
+[Unit]
+Description=Generate OPS Health JSON for index.html
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/hp_ops_health_json.sh

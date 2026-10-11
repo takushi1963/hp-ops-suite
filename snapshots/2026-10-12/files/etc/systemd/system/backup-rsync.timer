@@ -1,0 +1,11 @@
+[Unit]
+Description=Daily Incremental Backup Timer (rsync)
+
+[Timer]
+OnCalendar=*-*-* 02:00:00
+Persistent=true
+RandomizedDelaySec=2m
+Unit=backup-rsync.service
+
+[Install]
+WantedBy=timers.target

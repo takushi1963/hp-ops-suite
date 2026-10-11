@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OPS Unified Monitor</title>
+<style>
+:root{color-scheme:dark}body{margin:0;background:#10151c;color:#e3eaf2;font:15px/1.6 system-ui,sans-serif}main{max-width:1200px;margin:auto;padding:24px}h1,h2{line-height:1.3}nav{display:flex;flex-wrap:wrap;gap:16px}a{color:#9ed7ff}section{margin:24px 0;padding:18px;background:#19222d;border:1px solid #354455;border-radius:8px}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}.card{padding:12px;background:#10151c;border-radius:6px}.ok{color:#a0e4b4}.warn{color:#ffdc91}.ng{color:#ffa6a6}.muted{color:#b2c0d0}table{border-collapse:collapse;width:100%}th,td{text-align:left;padding:8px;border-bottom:1px solid #354455;overflow-wrap:anywhere}.scroll{overflow-x:auto}pre{white-space:pre-wrap;overflow-wrap:anywhere}.large{font-size:1.3em}svg{display:block;width:100%;height:180px}button{padding:8px 12px;border:1px solid #9ed7ff;background:#10151c;color:#e3eaf2;border-radius:6px;cursor:pointer}a:focus-visible,button:focus-visible{outline:3px solid #ffdc91;outline-offset:3px}.card strong{display:block}small{display:block}
+</style>
+<script src="/ops-monitor.js" defer></script>
+</head>
+<body><main>
+<h1>OPS Unified Monitor</h1>
+<nav aria-label="主なページ"><a href="/">Home</a><a href="/tar1090/">航空機マップ</a><a href="/status/">状態・レポート</a><a href="/status/unified_events.html">音声イベント・再生</a><a href="/reports/">レポート</a><a href="/concept_snapshot/">構成資料</a></nav>
+<p>参照専用。状態は30秒ごとに生成し、取得完了後に画面を更新します。</p>
+<p id="updated" class="muted">取得中…</p><button id="refresh" type="button">今すぐ更新</button>
+<section aria-labelledby="critical-title"><h2 id="critical-title">総合状態</h2><div id="critical" role="status" aria-live="polite">取得中…</div></section>
+<section><h2>システム・受信状態</h2><div id="health" class="cards"></div></section>
+<section><h2>配信・録音</h2><p class="muted">接続状態はローカルで確認した通信状態です。配信先での受理を保証するものではありません。</p><div class="scroll"><table><thead><tr><th scope="col">対象</th><th scope="col">状態</th><th scope="col">接続／詳細</th><th scope="col">確認時刻</th></tr></thead><tbody id="feeds"></tbody></table></div></section>
+<section><h2>音声・RMS</h2><p id="audio"></p><svg id="rms-chart" viewBox="0 0 1000 180" role="img" aria-label="過去24時間のRMS推移（1分平均）"></svg><p id="rms-range" class="muted"></p><div class="scroll"><table><thead><tr><th scope="col">UTC時刻</th><th scope="col">Source</th><th scope="col">録音</th></tr></thead><tbody id="events"></tbody></table></div></section>
+<section><h2>バックアップ</h2><p id="backup-mount"></p><div id="backups" class="cards"></div><p class="muted">成功表示は実行結果と日時の確認です。復元試験の結果ではありません。</p></section>
+<section><h2>低周波・音紋学習</h2><pre id="lowfreq"></pre><p id="fingerprint"></p></section>
+</main></body></html>

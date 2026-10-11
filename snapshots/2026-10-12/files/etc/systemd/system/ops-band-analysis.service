@@ -1,0 +1,12 @@
+[Unit]
+Description=Incremental low frequency WAV measurements
+[Service]
+Type=oneshot
+User=taku
+Group=taku
+ExecStart=/usr/bin/python3 /usr/local/lib/ops-dashboard-repair/analyze.py --limit 20
+TimeoutStartSec=15min
+Nice=10
+IOSchedulingClass=idle
+NoNewPrivileges=yes
+PrivateTmp=yes

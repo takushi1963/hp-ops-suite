@@ -1,0 +1,6 @@
+[Unit]
+Description=OPS Full Health Check (Web Update)
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash -c '/usr/local/bin/ops_full_healthcheck.sh | tee /var/www/html/ops/health.txt >/dev/null'

@@ -4,7 +4,7 @@
 
 古い取得JSは戻さず、現在のdashboard.jsonへ安全に接続する。HTTP/形式/鮮度チェック、1回ずつの取得、8秒timeout、失敗時の現在値消去、textContentと安全な音声URLを使用。数値0を表示。404になっていた静的RMS画像は同じ位置のSVGに置き換える。低周波はOPS SUMMARYへ表示。
 
-公開ルートHTMLとその2つの元ソース、および新JSのみ変更。ADSB専用ページやバックアップ処理は変更しない。現在は未適用。
+公開ルートHTMLとその2つの元ソース、および新JSのみ変更。ADSB専用ページやバックアップ処理は変更しない。2026-10-12 09:13 JSTに適用済み。HTTP配信とDOM検証を確認。
 
 ```bash
 sudo python3 /home/taku/index-layout-restore-20261012/install.py --apply

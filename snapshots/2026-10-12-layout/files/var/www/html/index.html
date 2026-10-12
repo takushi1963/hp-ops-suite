@@ -1,0 +1,213 @@
+<!--
+ ============================================================
+ File    : index.html
+ Version : 5.6.0-A+++
+ Updated : 2026-03-07
+
+ Purpose :
+   OPS Unified Summary - FULL MONITOR
+   - 縦並び統合監視
+   - 壊れないJS（text取得）
+   - 10秒自動更新
+   - 色分岐（OK/NG/WARN）
+   - FEED表形式化（timestamp列追加）
+   - OPS HEALTH 色付き要約 + 詳細表示
+   - READ-ONLY
+
+ ChangeLog :
+   5.6.0 - OPS HEALTH を色付き要約 + ファイル名短縮表示に改善
+   5.5.0 - OPS HEALTH セクション追加（ops_health.json）
+   5.4.2 - FEEDセクションを表形式へ刷新（既存構造完全保持）
+ ============================================================
+-->
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OPS Unified Summary v5.6</title>
+<style>
+body{font-family:monospace;background:#111;color:#eee;padding:20px}
+h1{color:#9cf}
+h2{color:#9cf}
+.section{margin-bottom:40px}
+pre{background:#1b1b1b;padding:10px;border:1px solid #333;white-space:pre-wrap}
+.ok{color:#7f7}
+.ng{color:#f77}
+.warn{color:#ffb}
+table{border-collapse:collapse;width:100%}
+th,td{border:1px solid #333;padding:6px}
+th{background:#222}
+.small{opacity:.7;font-size:90%}
+a{color:#8fd;text-decoration:none}
+a:hover{text-decoration:underline}
+.card{background:#181818;border:1px solid #333;padding:10px}
+.health-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:10px;
+  margin-bottom:12px;
+}
+.health-box{
+  background:#181818;
+  border:1px solid #333;
+  border-radius:8px;
+  padding:10px;
+}
+.health-title{
+  font-size:90%;
+  opacity:.8;
+  margin-bottom:6px;
+}
+.health-value{
+  font-size:120%;
+  font-weight:bold;
+}
+.health-ok{color:#7f7}
+.health-ng{color:#f77}
+.health-warn{color:#ffb}
+</style>
+<script src="/ops-legacy-monitor.js" defer></script>
+</head>
+<body>
+
+<!-- ================= GLOBAL NAV ================= -->
+<div style="background:#1a1a1a;padding:10px;margin-bottom:20px;border:1px solid #333;">
+<b>🌍 GLOBAL LINKS</b><br><br>
+
+<a href="/" target="_blank" rel="noopener noreferrer">🏠 Home</a> |
+<a href="/tar1090" target="_blank" rel="noopener noreferrer">📡 tar1090</a> |
+<a href="/status" target="_blank" rel="noopener noreferrer">📊 Status</a> |
+<a href="/audio" target="_blank" rel="noopener noreferrer">🎧 Audio</a> |
+<a href="/reports" target="_blank" rel="noopener noreferrer">📑 Reports</a> |
+<a href="/system_snapshot" target="_blank" rel="noopener noreferrer">🖥 Snapshot</a> |
+<a href="/backup-logs" target="_blank" rel="noopener noreferrer">💾 Backup Logs</a> |
+<a href="/dashboard" target="_blank" rel="noopener noreferrer">🧠 OPS Dashboard</a> |
+<a href="/rms.html" target="_blank" rel="noopener noreferrer">📈 RMS</a> |
+<a href="/explosion_heatmap.html" target="_blank" rel="noopener noreferrer">🔥 Heatmap</a> |
+<a href="/explosion_events.html" target="_blank" rel="noopener noreferrer">💥 Events</a> |
+<a href="/inventory" target="_blank" rel="noopener noreferrer">📦 Inventory</a> |
+<a href="/concept_snapshot" target="_blank" rel="noopener noreferrer">📘 Concept</a> |
+<a id="grafana-link" href="http://192.168.0.5:3000" target="_blank" rel="noopener noreferrer">📊 Grafana</a>
+
+<br><br>
+<span style="color:#ffb;">
+SSH操作のみ実行可 / WebはREAD-ONLY
+</span>
+</div>
+
+<h1>🛠 OPS Unified Summary v5.6</h1>
+<p id="updated" class="small">取得中…</p>
+
+<!-- ================= FEED ================= -->
+<div class="section">
+<h2>📡 FEED STATUS</h2>
+
+<table>
+<thead>
+<tr>
+<th>Feed</th>
+<th>Service</th>
+<th>State</th>
+<th>Network</th>
+<th>Timestamp</th>
+<th>Link</th>
+</tr>
+</thead>
+<tbody id="feedTable">
+<tr><td colspan="6">Loading...</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- ================= CRITICAL ================= -->
+<div class="section">
+<h2>🚨 CRITICAL</h2>
+<pre id="critical">Loading...</pre>
+</div>
+
+<!-- ================= OPS HEALTH ================= -->
+<div class="section">
+<h2>🩺 OPS HEALTH</h2>
+
+<div class="health-grid">
+  <div class="health-box">
+    <div class="health-title">Audio Core</div>
+    <div class="health-value" id="sumAudio">...</div>
+  </div>
+  <div class="health-box">
+    <div class="health-title">ADS-B Receiver</div>
+    <div class="health-value" id="sumAdsb">...</div>
+  </div>
+  <div class="health-box">
+    <div class="health-title">Aircraft</div>
+    <div class="health-value" id="sumAircraft">...</div>
+  </div>
+  <div class="health-box">
+    <div class="health-title">CPU Temp</div>
+    <div class="health-value" id="sumTemp">...</div>
+  </div>
+  <div class="health-box">
+    <div class="health-title">Disk /</div>
+    <div class="health-value" id="sumDisk">...</div>
+  </div>
+  <div class="health-box">
+    <div class="health-title">Last DD</div>
+    <div class="health-value" id="sumDd">...</div>
+  </div>
+</div>
+
+<pre id="opsHealth">Loading...</pre>
+</div>
+<!-- ============================================================
+ AUDIO FINGERPRINT LEARNING
+ Version : 1.0.0-A+++
+ Updated : 2026-03-28
+
+ Purpose :
+   音紋学習結果の可視化
+   - JSON参照方式（壊れない設計）
+   - 10秒自動更新
+============================================================ -->
+<div class="section">
+<h2>🧠 AUDIO FINGERPRINT LEARNING</h2>
+<pre id="fpSummary">Loading...</pre>
+</div>
+<!-- ================= AUDIO ================= -->
+<div class="section">
+<h2>🎧 AUDIO</h2>
+
+<div>24h Boom : <span id="boom24h">...</span></div>
+<br>
+
+<table>
+<tr><th>Time</th><th>Source</th><th>Play</th></tr>
+<tbody id="events"></tbody>
+</table>
+
+<br>
+<svg id="rms-chart" viewBox="0 0 1000 180" style="width:100%;height:180px" role="img" aria-label="過去24時間のRMS推移"></svg>
+<p id="rms-range" class="small"></p>
+<br>
+<pre id="audioStatus">Loading...</pre>
+</div>
+
+<!-- ================= BACKUP ================= -->
+<div class="section">
+<h2>💾 BACKUP</h2>
+<pre id="backupStatus">Loading...</pre>
+</div>
+
+<!-- ================= OPS ================= -->
+<div class="section">
+<h2>🧠 OPS SUMMARY</h2>
+<pre id="opsSummary">Loading...</pre>
+</div>
+
+<p class="small">
+READ-ONLY / Auto refresh 10s / SSH-only operation
+</p>
+
+</body>
+</html>

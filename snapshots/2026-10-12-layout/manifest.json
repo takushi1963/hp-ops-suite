@@ -1,0 +1,26 @@
+[
+  {
+    "target": "/var/www/html/ops-legacy-monitor.js",
+    "snapshot": "files/var/www/html/ops-legacy-monitor.js",
+    "sha256": "bb68f663ab940f4b3eb694a453708063b2c7931cdc870793dd4847a55f1fccc5",
+    "mode": "0o644"
+  },
+  {
+    "target": "/var/www/html/index.html",
+    "snapshot": "files/var/www/html/index.html",
+    "sha256": "3591cc2bd0ca3293f372c95eb6a283e57a7aaeaa7923c9d381786222ea420e41",
+    "mode": "0o644"
+  },
+  {
+    "target": "/home/taku/projects/ops/web/index.html",
+    "snapshot": "files/home/taku/projects/ops/web/index.html",
+    "sha256": "3591cc2bd0ca3293f372c95eb6a283e57a7aaeaa7923c9d381786222ea420e41",
+    "mode": "0o644"
+  },
+  {
+    "target": "/home/taku/ops/www/index.html",
+    "snapshot": "files/home/taku/ops/www/index.html",
+    "sha256": "3591cc2bd0ca3293f372c95eb6a283e57a7aaeaa7923c9d381786222ea420e41",
+    "mode": "0o644"
+  }
+]
